@@ -35,10 +35,10 @@ galaxy_info:
   platforms:
    - name: Centos
      versions:
-      - 7
+      - all
    - name: Ubuntu
      versions:
-      - 14.04
+      - all
   # - name: SomePlatform
   #   versions:
   #   - all
