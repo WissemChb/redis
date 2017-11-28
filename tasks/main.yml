@@ -1,0 +1,22 @@
+---
+# tasks file for redis-server
+- name: "Install redis in RedHat Systems"
+  include: redis-{{ redhat_system }}.yml
+  when: ansible_os_family == "RedHat"
+
+- name: "Install redis in Debian systems"
+  include: redis-{{ debian_system }}.yml
+  when: ansible_os_family == "Debian"
+
+
+#Test configuration
+- name: "Test redis configuration"
+  command: redis-cli -h {{ ansible_eth1.ipv4.address  }} ping
+  register: connection_output
+  failed_when: "'PONG' not in connection_output.stdout"
+
+
+  
+
+
+

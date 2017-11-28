@@ -1,0 +1,44 @@
+---
+#Install epel-release for Redhat systems
+- name: 'Install epel-release'
+  yum:
+    name: "{{ epel_url }}"
+    update_cache: yes
+
+
+#Install redis for redhat
+- name: 'Install redis'
+  yum:
+    name: redis
+    state: latest
+    update_cache: yes
+
+
+#Enable redis in RedHat systems
+- name: "Start redis"
+  systemd:
+    name: redis
+    enabled: yes
+    state: started
+
+#Check redis is well installed
+- name: "Test redis is well installed"
+  command: redis-cli ping
+  register: redis_test_output
+  failed_when: "'PONG' not in redis_test_output.stdout"
+
+  #configure redis to be connected from outside
+- name: "Configuring the redis"
+  template:
+    src: ../templates/redis.conf.j2
+    dest: /etc/redis.conf
+    owner: vagrant
+    mode: 0644
+
+- name: restart redis server
+  service:
+    name: redis
+    state: restarted
+
+
+ 

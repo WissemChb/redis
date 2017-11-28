@@ -1,0 +1,4 @@
+---
+# vars file for redis-server
+redhat_system: "RedHat"
+debian_system: "Debian"
